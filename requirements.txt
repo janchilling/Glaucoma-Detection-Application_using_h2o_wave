@@ -1,0 +1,5 @@
+h2o-wave
+tensorflow
+numpy
+pillow
+opencv-python
