@@ -1,3 +1,4 @@
 h2o-wave
 tensorflow
 numpy
+Pillow
