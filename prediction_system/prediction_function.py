@@ -38,6 +38,6 @@ class Predictor:
         else:
             result = 'Negative'
 
-        return f'The provided retinal image shows {result} Glaucoma'
+        return f'The provided retinal image is Glaucoma {result}'
 
 predictor = Predictor()

@@ -1,4 +1,4 @@
-# book-recommendation-system_using_h2o-wave
+# Glaucoma Detection Application using H2O Wave
 
 
 

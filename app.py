@@ -99,7 +99,7 @@ async def detect_Glaucoma(q: Q):
     # Showing the user uploaded image and adjusting the footer
     q.page['image'] = ui.image_card(
         box='4 5 4 4',
-        title='Provided retinal image',
+        title='Provided Retinal image',
         path=upload_file
     )
 
