@@ -50,6 +50,7 @@ async def init(q: Q) -> None:
         box='6 3 4 3',  # Adjusted to fit side by side
         title='Result',
         content=f'The results will be shown here.'
+
     )
     
     q.page['footer'] = ui.footer_card(
@@ -68,21 +69,23 @@ async def detect_Glaucoma(q: Q):
 
     upload_files = q.args['file_upload']
     upload_file = upload_files[0]  # Access the first uploaded file
+    print(upload_file + "\n\n")
 
     # Generate a unique file name
     file_name = str(uuid.uuid4()) + '.jpg'
 
     # Save the uploaded file to the uploads directory
     file_path = os.path.join(UPLOAD_DIR, file_name)
+    print(file_path + "\n\n")
+    print(file_name + "\n\n")
     file = await q.site.download(upload_file, file_path)
-
-    q.page['image'] = ui.form_card(
-        box='4 6 4 4', 
-        items=[
-            ui.image(
-                'Image Stream', 
-                path=file_path
-                )])
+    print(file + "\n\n")
+    q.page['image'] = ui.image_card(
+                box='4 6 4 4',
+                title = 'User input retinal image', 
+                path=upload_file
+                )
+    
     
     q.page['footer'] = ui.footer_card(
         box='1 10 -1 1',
