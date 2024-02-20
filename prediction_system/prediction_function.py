@@ -1,5 +1,4 @@
 import numpy as np
-import cv2
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 
@@ -20,6 +19,6 @@ class Predictor:
         else:
             result = 'Negative'
 
-        return f'The above retinal image shows {result} Glaucoma'
+        return f'The provided retinal image shows {result} Glaucoma'
 
 predictor = Predictor()
