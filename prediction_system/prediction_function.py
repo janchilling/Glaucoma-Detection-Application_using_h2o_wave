@@ -8,7 +8,7 @@ class Predictor:
         Initializes the Predictor class by loading the pre-trained deep learning model.
         """
 
-        self.model = load_model('prediction_system\prediction_model\convnetModel.h5')
+        self.model = load_model('prediction_system/prediction_model/convnetModel.h5')
 
     async def predict(self, file_path):
         """
