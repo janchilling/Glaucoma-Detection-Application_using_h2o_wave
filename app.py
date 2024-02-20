@@ -17,9 +17,9 @@ async def init(q: Q) -> None:
     q.client.dark_mode = False
 
     q.page['header'] = ui.header_card(
-        box='1 1 10 1',
+        box='2 1 8 1',
         title='Glaucoma Detection Application',
-        subtitle="The assignment for the h20 Wave internship",
+        subtitle="The assignment for the H2O Wave internship",
         image='https://wave.h2o.ai/img/h2o-logo.svg'
     )
 
@@ -29,30 +29,31 @@ async def init(q: Q) -> None:
         theme='light',
     )
 
+    q.page['instructions'] = ui.form_card(
+        box='4 2 3 1', 
+        items=[ui.text_l(
+            "Upload a Retinal Image of the eye for detection"
+        )]
+    )
+
     q.page["userInput"] = ui.form_card(
-        box="2 3 8 3",
+        box="2 3 4 3",  # Adjusted to fit side by side
         items=[
-            ui.text(
-                "Upload a Retinal Image of the eye for detection"
-            ),
             ui.file_upload(
                 name='file_upload', 
-                label='Predict'
+                label='Detect'
             )
         ],
     )
 
     q.page['prediction'] = ui.article_card(
-    box='5 6 3 2',
-    title='Prediction',
-    content='''
-The detection result for the provided retinal image will be shown here!
-'''
-)
-    
+        box='6 3 4 3',  # Adjusted to fit side by side
+        title='Result',
+        content=f'The results will be shown here.'
+    )
     
     q.page['footer'] = ui.footer_card(
-        box='0 8 -1 1',
+        box='1 8 -1 1',
         caption='This Glaucoma Detection application was made with 💛 using [H2O Wave](https://wave.h2o.ai).'
     )
 
@@ -62,6 +63,9 @@ UPLOAD_DIR = 'uploads'
 
 @on('file_upload')
 async def detect_Glaucoma(q: Q):
+    if not os.path.exists(UPLOAD_DIR):
+        os.makedirs(UPLOAD_DIR)
+
     upload_files = q.args['file_upload']
     upload_file = upload_files[0]  # Access the first uploaded file
 
@@ -70,12 +74,25 @@ async def detect_Glaucoma(q: Q):
 
     # Save the uploaded file to the uploads directory
     file_path = os.path.join(UPLOAD_DIR, file_name)
-    await q.site.download(upload_file, file_path)
+    file = await q.site.download(upload_file, file_path)
+
+    q.page['image'] = ui.form_card(
+        box='4 6 4 4', 
+        items=[
+            ui.image(
+                'Image Stream', 
+                path=file_path
+                )])
+    
+    q.page['footer'] = ui.footer_card(
+        box='1 10 -1 1',
+        caption='This Glaucoma Detection application was made with 💛 using [H2O Wave](https://wave.h2o.ai).'
+    )
 
     # Use the downloaded file path for prediction
     prediction = await predictor.predict(file_path)
     q.page['prediction'].content = f'Prediction: {prediction}'
-    
+    await q.page.save()
 
 @on()
 async def home(q: Q):

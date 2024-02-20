@@ -22,22 +22,4 @@ class Predictor:
 
         return f'The above retinal image shows {result} Glaucoma'
 
-#     async def predict_stream(self, stream_name, q):
-#         async for data in q.site.stream(stream_name):
-#             nparr = np.frombuffer(data, np.uint8)
-#             img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-#             img = cv2.resize(img, (180, 180))  # Resize the image if necessary
-#             img_array = np.expand_dims(img, axis=0)
-#             img_array = img_array / 255.0
-
-#             prediction = self.model.predict(img_array)
-
-#             if prediction[0][0] >= 0.5:
-#                 result = 'Positive'
-#             else:
-#                 result = 'Negative'
-
-#             return f'The above retinal image shows {result} Glaucoma'
-
-
 predictor = Predictor()
