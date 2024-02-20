@@ -74,21 +74,29 @@ async def init(q: Q) -> None:
 
     await home(q)
 
+# Handling the image upload and the prediction
 @on('file_upload')
 async def detect_Glaucoma(q: Q):
+
+    # Creating an uploads folder to store the images, only if uploads folder already doesn't exist
     if not os.path.exists(UPLOAD_DIR):
         os.makedirs(UPLOAD_DIR)
 
+    # Getting the temporary image path in the server
     upload_files = q.args['file_upload']
     upload_file = upload_files[0]
 
+    # Creating an unique filename for the uploaded image
     file_name = str(uuid.uuid4()) + '.jpg'
 
+    # Sending the file to the uploads directory
     file_path = os.path.join(UPLOAD_DIR, file_name)
-    file = await q.site.download(upload_file, file_path)
+    await q.site.download(upload_file, file_path)
 
+    # Removing the instructions compoenent
     del q.page['instructions']
 
+    # Showing the user uploaded image and adjusting the footer
     q.page['image'] = ui.image_card(
         box='4 5 4 4',
         title='Provided retinal image',
@@ -100,6 +108,7 @@ async def detect_Glaucoma(q: Q):
         caption='This Glaucoma Detection application was made with 💛 using [H2O Wave](https://wave.h2o.ai).'
     )
 
+    # Passing the file path to the predictor function and updating the result
     prediction = await predictor.predict(file_path)
     q.page['prediction'].content = f'{prediction}'
     await q.page.save()
