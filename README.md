@@ -1,8 +1,7 @@
 # Glaucoma Detection Application using H2O Wave
 
 
-
-https://user-images.githubusercontent.com/67860730/205605228-cf2eaa5e-e69b-4eae-98aa-c913e3d28c42.mp4
+https://github.com/janchilling/Glaucoma-Detection-Application_using_h2o_wave/assets/85122582/972a5a96-0e65-47fe-a9bb-21fd2b259234
 
 
 This is a simple Glaucoma Detection system made using [h2o wave](https://wave.h2o.ai/).
